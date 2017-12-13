@@ -1,5 +1,7 @@
 version: '3'
+
 services:
+
   proxy:
     image: jwilder/nginx-proxy
     container_name: cpf-proxy

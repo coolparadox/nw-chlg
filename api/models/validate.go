@@ -2,7 +2,7 @@ package models
 
 /*
 
-CPF and CNPJ validation algorithms were originally taken and adapted from:
+CPF and CNPJ validation algorithms were adapted from:
 <https://gopher.net.br/validacao-de-cpf-e-cnpj-em-go/>
 
 Original author: Arthur Mastropietro
@@ -11,22 +11,24 @@ Original author: Arthur Mastropietro
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
-// func main() {
-	// fmt.Println(ValidateCpf("152.713.684-71"))
-// }
-
-
-// FIXME: sanitize input for digits
-// FIXME: autocomplete with heading '0'?
-func ValidateCpf(cpf string) error {
+// TODO(Rafael): improve detail of error messages
+func ValidateCpf(cpf string) (string, error) {
 	cpf = strings.Replace(cpf, ".", "", -1)
 	cpf = strings.Replace(cpf, "-", "", -1)
+	for _, c := range cpf {
+		if !unicode.IsDigit(c) {
+			return cpf, errors.New("invalid CPF")
+		}
+	}
+	cpf = fmt.Sprintf("%011v", cpf)
 	if len(cpf) != 11 {
-		return errors.New("invalid CPF")
+		return cpf, errors.New("invalid CPF")
 	}
 	var eq bool
 	var dig string
@@ -42,7 +44,7 @@ func ValidateCpf(cpf string) error {
 		break
 	}
 	if eq {
-		return errors.New("invalid CPF")
+		return cpf, errors.New("invalid CPF")
 	}
 
 	i := 10
@@ -60,7 +62,7 @@ func ValidateCpf(cpf string) error {
 	}
 	digit1, _ := strconv.Atoi(string(cpf[9]))
 	if mod != digit1 {
-		return errors.New("invalid CPF")
+		return cpf, errors.New("invalid CPF")
 	}
 	i = 11
 	sum = 0
@@ -76,18 +78,25 @@ func ValidateCpf(cpf string) error {
 	}
 	digit2, _ := strconv.Atoi(string(cpf[10]))
 	if mod != digit2 {
-		return errors.New("invalid CPF")
+		return cpf, errors.New("invalid CPF")
 	}
 
-	return nil
+	return cpf, nil
 }
 
-func ValidateCnpj(cnpj string) error {
+// TODO(Rafael): improve detail of error messages
+func ValidateCnpj(cnpj string) (string, error) {
 	cnpj = strings.Replace(cnpj, ".", "", -1)
 	cnpj = strings.Replace(cnpj, "-", "", -1)
 	cnpj = strings.Replace(cnpj, "/", "", -1)
+	for _, c := range cnpj {
+		if !unicode.IsDigit(c) {
+			return cnpj, errors.New("invalid CNPJ")
+		}
+	}
+	cnpj = fmt.Sprintf("%014v", cnpj)
 	if len(cnpj) != 14 {
-		return errors.New("invalid CNPJ")
+		return cnpj, errors.New("invalid CNPJ")
 	}
 
 	algs := []int{5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2}
@@ -109,7 +118,7 @@ func ValidateCnpj(cnpj string) error {
 	}
 	char12, _ := strconv.Atoi(string(cnpj[12]))
 	if char12 != digit1 {
-		return errors.New("invalid CNPJ")
+		return cnpj, errors.New("invalid CNPJ")
 	}
 	algs = append([]int{6}, algs...)
 
@@ -133,9 +142,9 @@ func ValidateCnpj(cnpj string) error {
 	}
 	char13, _ := strconv.Atoi(string(cnpj[13]))
 	if char13 != digit2 {
-		return errors.New("invalid CNPJ")
+		return cnpj, errors.New("invalid CNPJ")
 	}
 
-	return nil
+	return cnpj, nil
 }
 
