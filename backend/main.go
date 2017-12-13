@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/mmorejon/cinema/users/common"
-	"github.com/mmorejon/cinema/users/routers"
+	"github.com/coolparadox/cpf/backend/common"
+	"github.com/coolparadox/cpf/backend/routers"
 )
 
 // Entry point for the program

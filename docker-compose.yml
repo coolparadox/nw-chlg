@@ -9,9 +9,9 @@ services:
       - "8080:80"
 
   users:
-    build: ./users
-    image: cinema/users
-    container_name: cinema-users
+    build: ./backend
+    image: cpf/backend
+    container_name: cpf-backend
     depends_on:
       - db
       - proxy

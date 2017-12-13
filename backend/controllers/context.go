@@ -3,7 +3,7 @@ package controllers
 import (
 	"gopkg.in/mgo.v2"
 
-	"github.com/mmorejon/cinema/users/common"
+	"github.com/coolparadox/cpf/backend/common"
 )
 
 // Struct used for maintaining HTTP Request Context
