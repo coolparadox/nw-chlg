@@ -2,7 +2,7 @@ version: '3'
 services:
   proxy:
     image: jwilder/nginx-proxy
-    container_name: cinema-nginx-proxy
+    container_name: cpf-proxy
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     ports:
