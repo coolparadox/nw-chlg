@@ -1,7 +1,5 @@
 version: '3'
-
 services:
-
   proxy:
     image: jwilder/nginx-proxy
     container_name: cpf-proxy
@@ -9,7 +7,6 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     ports:
       - "8080:80"
-
   api:
     build: ./api
     image: cpf/api
@@ -21,10 +18,8 @@ services:
       - db
     environment:
       VIRTUAL_HOST: cpf-api.local
-
   db:
     image: mongo:3.6.0-jessie
     container_name: cpf-db
     volumes:
       - ./backup:/backup:rw
-

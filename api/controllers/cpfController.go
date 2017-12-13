@@ -14,19 +14,22 @@ import (
 
 // Handler for HTTP Get - "/cpfs"
 func GetCpfs(w http.ResponseWriter, r *http.Request) {
+
 	// Create new context
 	context := NewContext()
 	defer context.Close()
 	c := context.DbCollection("cpfs")
 	repo := &data.CpfRepository{c}
+
 	// Get all cpfs form repository
 	// TODO(Rafael): controls for pagination (skip, limit etc)
 	cpfs := repo.GetAll()
 	j, err := json.Marshal(CpfsResource{Data: cpfs})
 	if err != nil {
-		common.DisplayAppError(w, err, "An unexpected error has occurred", 500)
+		common.DisplayAppError(w, err, "An unexpected error has occurred", http.StatusInternalServerError)
 		return
 	}
+
 	// Send response back
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -34,14 +37,13 @@ func GetCpfs(w http.ResponseWriter, r *http.Request) {
 }
 
 // Handler for HTTP Post - "/cpfs"
-// Create a new Showtime document
 func CreateCpf(w http.ResponseWriter, r *http.Request) {
 	var dataResource CpfResource
 
 	// Decode the incoming json data
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
-		common.DisplayAppError(w, err, "Invalid json data", 400)
+		common.DisplayAppError(w, err, "Invalid json data", http.StatusBadRequest)
 		return
 	}
 	cpfData := &dataResource.Data
@@ -50,14 +52,14 @@ func CreateCpf(w http.ResponseWriter, r *http.Request) {
 	if cpfData.IsCnpj {
 		sanitized_cpf, err := models.ValidateCnpj(cpfData.Cpf);
 		if err != nil {
-			common.DisplayAppError(w, err, "Invalid CNPJ", 400)
+			common.DisplayAppError(w, err, "Invalid CNPJ", http.StatusBadRequest)
 			return
 		}
 		cpfData.Cpf = sanitized_cpf;
 	} else {
 		sanitized_cpf, err := models.ValidateCpf(cpfData.Cpf);
 		if err != nil {
-			common.DisplayAppError(w, err, "Invalid CPF", 400)
+			common.DisplayAppError(w, err, "Invalid CPF", http.StatusBadRequest)
 			return
 		}
 		cpfData.Cpf = sanitized_cpf;
@@ -70,9 +72,9 @@ func CreateCpf(w http.ResponseWriter, r *http.Request) {
 	repo := &data.CpfRepository{c}
 
 	// Safeguard against double entry
-	cpfData2, err := repo.GetCpf(cpfData.Cpf);
+	cpfData2, err := repo.GetCpfByCpf(cpfData.Cpf);
 	if err == nil {
-		common.DisplayAppError(w, fmt.Errorf("CPF/CNPJ found at id %v", cpfData2.Id), "Duplicated CPF/CNPJ", 403)
+		common.DisplayAppError(w, fmt.Errorf("CPF/CNPJ found at id %v", cpfData2.Id), "Duplicated CPF/CNPJ", http.StatusForbidden)
 		return
 	}
 
@@ -82,7 +84,7 @@ func CreateCpf(w http.ResponseWriter, r *http.Request) {
 	// Send response
 	j, err := json.Marshal(dataResource)
 	if err != nil {
-		common.DisplayAppError(w, err, "An unexpected error has occurred", 500)
+		common.DisplayAppError(w, err, "An unexpected error has occurred", http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -90,9 +92,46 @@ func CreateCpf(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
+// Handler for HTTP Get - "/cpfs/{id}"
+func GetCpfById(w http.ResponseWriter, r *http.Request) {
+
+	// Get id from incoming url
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	// Create new context
+	context := NewContext()
+	defer context.Close()
+	c := context.DbCollection("cpfs")
+
+	// Retrieve by id
+	repo := &data.CpfRepository{c}
+	cpfData, err := repo.GetCpfById(id)
+	if err != nil {
+		if err == mgo.ErrNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		} else {
+			common.DisplayAppError(w, err, "An unexpected error has occurred", http.StatusInternalServerError)
+			return
+		}
+	}
+
+	// Send response
+	j, err := json.Marshal(CpfResource{cpfData})
+	if err != nil {
+		common.DisplayAppError(w, err, "An unexpected error has occurred", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
+}
+
+
 // Handler for HTTP Delete - "/cpfs/{id}"
-// Delete a Cpf document by id
 func DeleteCpf(w http.ResponseWriter, r *http.Request) {
+
 	// Get id from incoming url
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -110,11 +149,12 @@ func DeleteCpf(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		} else {
-			common.DisplayAppError(w, err, "An unexpected error ahs occurred", 500)
+			common.DisplayAppError(w, err, "An unexpected error has occurred", http.StatusInternalServerError)
 			return
 		}
 	}
 
 	// Send response back
-	w.WriteHeader(http.StatusNoContent)
+	w.WriteHeader(http.StatusOK)
 }
+

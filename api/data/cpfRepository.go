@@ -27,13 +27,25 @@ func (r *CpfRepository) GetAll() []models.Cpf {
 	return answer
 }
 
-func (r *CpfRepository) GetCpf(cpf string) (models.Cpf, error) {
+func (r *CpfRepository) GetCpfById(id string) (models.Cpf, error) {
+	var answer models.Cpf
+	if !bson.IsObjectIdHex(id) {
+		return answer, mgo.ErrNotFound
+	}
+	err := r.C.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&answer)
+	return answer, err
+}
+
+func (r *CpfRepository) GetCpfByCpf(cpf string) (models.Cpf, error) {
 	var answer models.Cpf
 	err := r.C.Find(bson.M{"cpf": cpf}).One(&answer)
 	return answer, err
 }
 
 func (r *CpfRepository) Delete(id string) error {
+	if !bson.IsObjectIdHex(id) {
+		return mgo.ErrNotFound
+	}
 	err := r.C.Remove(bson.M{"_id": bson.ObjectIdHex(id)})
 	return err
 }
