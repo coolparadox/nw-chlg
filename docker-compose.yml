@@ -21,8 +21,8 @@ services:
       VIRTUAL_HOST: users.local
 
   db:
-    image: mongo:3.3
-    container_name: cinema-db
+    image: mongo:3.6.0-jessie
+    container_name: cpf-db
     volumes:
       - ./backup:/backup:rw
 
