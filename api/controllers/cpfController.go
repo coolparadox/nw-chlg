@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -128,6 +129,52 @@ func GetCpfById(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
+// Handler for HTTP Get - "/cpfs/by_cpf/{cpf}"
+func GetCpfByCpf(w http.ResponseWriter, r *http.Request) {
+
+	// Get cpf from incoming url
+	vars := mux.Vars(r)
+	cpf := vars["cpf"]
+
+	// Validate input
+	cpf2, err := models.ValidateCpf(cpf)
+	if err != nil {
+		cpf2, err = models.ValidateCnpj(cpf)
+	}
+	if err != nil {
+		common.DisplayAppError(w, errors.New("invalid input"), "Input is not a valid CPF/CNPJ", http.StatusBadRequest)
+		return
+	}
+	cpf = cpf2
+
+	// Create new context
+	context := NewContext()
+	defer context.Close()
+	c := context.DbCollection("cpfs")
+
+	// Retrieve by cpf
+	repo := &data.CpfRepository{c}
+	cpfData, err := repo.GetCpfByCpf(cpf)
+	if err != nil {
+		if err == mgo.ErrNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		} else {
+			common.DisplayAppError(w, err, "An unexpected error has occurred", http.StatusInternalServerError)
+			return
+		}
+	}
+
+	// Send response
+	j, err := json.Marshal(CpfResource{cpfData})
+	if err != nil {
+		common.DisplayAppError(w, err, "An unexpected error has occurred", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
+}
 
 // Handler for HTTP Delete - "/cpfs/{id}"
 func DeleteCpf(w http.ResponseWriter, r *http.Request) {
