@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/coolparadox/cpf/backend/models"
+	"github.com/coolparadox/cpf/api/models"
 )
 
 type (

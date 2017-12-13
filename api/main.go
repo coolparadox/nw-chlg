@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/coolparadox/cpf/backend/common"
-	"github.com/coolparadox/cpf/backend/routers"
+	"github.com/coolparadox/cpf/api/common"
+	"github.com/coolparadox/cpf/api/routers"
 )
 
 func main() {

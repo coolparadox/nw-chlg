@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/coolparadox/cpf/backend/models"
+	"github.com/coolparadox/cpf/api/models"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

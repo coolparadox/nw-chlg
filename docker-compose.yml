@@ -8,17 +8,17 @@ services:
     ports:
       - "8080:80"
 
-  backend:
-    build: ./backend
-    image: cpf/backend
-    container_name: cpf-backend
+  api:
+    build: ./api
+    image: cpf/api
+    container_name: cpf-api
     depends_on:
       - db
       - proxy
     links:
       - db
     environment:
-      VIRTUAL_HOST: cpf-backend.local
+      VIRTUAL_HOST: cpf-api.local
 
   db:
     image: mongo:3.6.0-jessie

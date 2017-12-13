@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/coolparadox/cpf/backend/common"
-	"github.com/coolparadox/cpf/backend/data"
+	"github.com/coolparadox/cpf/api/common"
+	"github.com/coolparadox/cpf/api/data"
 	"gopkg.in/mgo.v2"
 )
 

@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/coolparadox/cpf/backend/controllers"
+	"github.com/coolparadox/cpf/api/controllers"
 )
 
 func SetCpfRouters(router *mux.Router) *mux.Router {
