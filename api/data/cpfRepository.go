@@ -18,13 +18,19 @@ func (r *CpfRepository) Create(cpf *models.Cpf) error {
 }
 
 func (r *CpfRepository) GetAll() []models.Cpf {
-	var cpfs []models.Cpf
+	var answer []models.Cpf
 	iter := r.C.Find(nil).Iter()
 	result := models.Cpf{}
 	for iter.Next(&result) {
-		cpfs = append(cpfs, result)
+		answer = append(answer, result)
 	}
-	return cpfs
+	return answer
+}
+
+func (r *CpfRepository) GetCpf(cpf string) (models.Cpf, error) {
+	var answer models.Cpf
+	err := r.C.Find(bson.M{"cpf": cpf}).One(&answer)
+	return answer, err
 }
 
 func (r *CpfRepository) Delete(id string) error {

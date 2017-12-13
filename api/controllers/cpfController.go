@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -19,6 +20,7 @@ func GetCpfs(w http.ResponseWriter, r *http.Request) {
 	c := context.DbCollection("cpfs")
 	repo := &data.CpfRepository{c}
 	// Get all cpfs form repository
+	// TODO(Rafael): controls for pagination (skip, limit etc)
 	cpfs := repo.GetAll()
 	j, err := json.Marshal(CpfsResource{Data: cpfs})
 	if err != nil {
@@ -61,11 +63,20 @@ func CreateCpf(w http.ResponseWriter, r *http.Request) {
 		cpfData.Cpf = sanitized_cpf;
 	}
 
-	// Store item
+	// Access database
 	context := NewContext()
 	defer context.Close()
 	c := context.DbCollection("cpfs")
 	repo := &data.CpfRepository{c}
+
+	// Safeguard against double entry
+	cpfData2, err := repo.GetCpf(cpfData.Cpf);
+	if err == nil {
+		common.DisplayAppError(w, fmt.Errorf("CPF/CNPJ found at id %v", cpfData2.Id), "Duplicated CPF/CNPJ", 403)
+		return
+	}
+
+	// Store item
 	repo.Create(cpfData)
 
 	// Send response
