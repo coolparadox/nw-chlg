@@ -10,17 +10,16 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
-// Handler for HTTP Get - "/users"
-// Returns all User documents
-func GetUsers(w http.ResponseWriter, r *http.Request) {
+// Handler for HTTP Get - "/cpfs"
+func GetCpfs(w http.ResponseWriter, r *http.Request) {
 	// Create new context
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("users")
-	repo := &data.UserRepository{c}
-	// Get all users form repository
-	users := repo.GetAll()
-	j, err := json.Marshal(UsersResource{Data: users})
+	c := context.DbCollection("cpfs")
+	repo := &data.CpfRepository{c}
+	// Get all cpfs form repository
+	cpfs := repo.GetAll()
+	j, err := json.Marshal(CpfsResource{Data: cpfs})
 	if err != nil {
 		common.DisplayAppError(w, err, "An unexpected error has occurred", 500)
 		return
@@ -31,24 +30,24 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
-// Handler for HTTP Post - "/users"
+// Handler for HTTP Post - "/cpfs"
 // Create a new Showtime document
-func CreateUser(w http.ResponseWriter, r *http.Request) {
-	var dataResource UserResource
-	// Decode the incoming User json
+func CreateCpf(w http.ResponseWriter, r *http.Request) {
+	var dataResource CpfResource
+	// Decode the incoming Cpf json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
-		common.DisplayAppError(w, err, "Invalid User data", 500)
+		common.DisplayAppError(w, err, "Invalid Cpf data", 500)
 		return
 	}
-	user := &dataResource.Data
+	cpf := &dataResource.Data
 	// Create new context
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("users")
-	// Create User
-	repo := &data.UserRepository{c}
-	repo.Create(user)
+	c := context.DbCollection("cpfs")
+	// Create Cpf
+	repo := &data.CpfRepository{c}
+	repo.Create(cpf)
 	// Create response data
 	j, err := json.Marshal(dataResource)
 	if err != nil {
@@ -61,9 +60,9 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
-// Handler for HTTP Delete - "/users/{id}"
-// Delete a User document by id
-func DeleteUser(w http.ResponseWriter, r *http.Request) {
+// Handler for HTTP Delete - "/cpfs/{id}"
+// Delete a Cpf document by id
+func DeleteCpf(w http.ResponseWriter, r *http.Request) {
 	// Get id from incoming url
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -71,10 +70,10 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	// Create new context
 	context := NewContext()
 	defer context.Close()
-	c := context.DbCollection("users")
+	c := context.DbCollection("cpfs")
 
-	// Remove user by id
-	repo := &data.UserRepository{c}
+	// Remove cpf by id
+	repo := &data.CpfRepository{c}
 	err := repo.Delete(id)
 	if err != nil {
 		if err == mgo.ErrNotFound {

@@ -1,2 +1,2 @@
 #! /bin/bash
-mongorestore -d users -c users /backup/users/users/users.bson
+mongorestore -d cpfs -c cpfs /backup/cpfs/cpfs/cpfs.bson

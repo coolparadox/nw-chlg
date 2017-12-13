@@ -6,7 +6,6 @@ import (
 
 func InitRoutes() *mux.Router {
 	router := mux.NewRouter().StrictSlash(false)
-	// Routes for the User entity
-	router = SetUsersRouters(router)
+	router = SetCpfRouters(router)
 	return router
 }

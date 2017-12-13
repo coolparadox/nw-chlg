@@ -5,12 +5,12 @@ import (
 )
 
 type (
-	// For Get - /users
-	UsersResource struct {
-		Data []models.User `json:"data"`
+	// For Get - /cpfs
+	CpfsResource struct {
+		Data []models.Cpf `json:"data"`
 	}
-	// For Post/Put - /users
-	UserResource struct {
-		Data models.User `json:"data"`
+	// For Post/Put - /cpfs
+	CpfResource struct {
+		Data models.Cpf `json:"data"`
 	}
 )
