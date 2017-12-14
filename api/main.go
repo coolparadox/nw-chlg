@@ -16,6 +16,6 @@ func main() {
 		Addr:    common.AppConfig.Server,
 		Handler: router,
 	}
-	log.Println("Starting to serve...")
+	log.Println("Listening...")
 	server.ListenAndServe()
 }
