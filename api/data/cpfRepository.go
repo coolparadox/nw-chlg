@@ -32,7 +32,7 @@ func (r *CpfRepository) GetCpfById(id string) (models.Cpf, error) {
 	if !bson.IsObjectIdHex(id) {
 		return answer, mgo.ErrNotFound
 	}
-	err := r.C.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&answer)
+	err := r.C.FindId(bson.ObjectIdHex(id)).One(&answer)
 	return answer, err
 }
 
@@ -49,3 +49,25 @@ func (r *CpfRepository) Delete(id string) error {
 	err := r.C.Remove(bson.M{"_id": bson.ObjectIdHex(id)})
 	return err
 }
+
+func (r *CpfRepository) Update(id string, cpf *models.Cpf) (models.Cpf, error) {
+	if !bson.IsObjectIdHex(id) {
+		return *cpf, mgo.ErrNotFound
+	}
+	err := r.C.UpdateId(bson.ObjectIdHex(id), bson.M{
+		"$set": bson.M{
+			"cpf": cpf.Cpf,
+			"is_cnpj": cpf.IsCnpj,
+			"blacklisted": cpf.Blacklisted,
+			"name": cpf.Name,
+			"comment": cpf.Comment,
+			},
+		})
+	var answer models.Cpf
+	err2 := r.C.FindId(bson.ObjectIdHex(id)).One(&answer)
+	if err2 != nil {
+		answer = *cpf
+	}
+	return answer, err
+}
+
