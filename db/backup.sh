@@ -10,4 +10,4 @@ LABEL="$1"
 test -n "$LABEL" || usage
 FILENAME="${LABEL}.mongodump.gz"
 echo "Generating ${FILENAME} in backup directory..."
-exec docker exec -it cpf-db mongodump -d cpfs -c cpfs --gzip --archive="/backup/${FILENAME}"
+exec docker exec cpf-db mongodump -d cpfs -c cpfs --gzip --archive="/backup/${FILENAME}"
