@@ -1,5 +1,13 @@
 {{ $CurrentContainer := where $ "ID" .Docker.CurrentContainerID | first }}
 
+{{ define "nginx_status" }}
+	location /status {
+		stub_status on;
+		access_log   off;
+		allow all;
+	}
+{{ end }}
+
 {{ define "upstream" }}
 	{{ if .Address }}
 		{{/* If we got the containers from swarm and this container's port is published to host, use host IP:PORT */}}
@@ -16,6 +24,7 @@
 		server {{ .Network.IP }} down;
 	{{ end }}
 {{ end }}
+
 
 # If we receive X-Forwarded-Proto, pass it through; otherwise, pass along the
 # scheme used to connect to this server
@@ -185,6 +194,7 @@ server {
                 include /etc/nginx/vhost.d/default_location;
                 {{ end }}
 	}
+	{{ template "nginx_status" }}
 }
 
 {{ end }}
@@ -219,6 +229,7 @@ server {
                 include /etc/nginx/vhost.d/default_location;
                 {{ end }}
 	}
+	{{ template "nginx_status" }}
 }
 
 {{ if (and (not $is_https) (exists "/etc/nginx/certs/default.crt") (exists "/etc/nginx/certs/default.key")) }}
