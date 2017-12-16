@@ -71,8 +71,6 @@ services:
     build: ./frontend
     image: cpf/frontend
     container_name: cpf-frontend
-    volumes:
-      - ./frontend:/home/node/app:rw
     links:
       - api
     environment:

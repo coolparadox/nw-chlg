@@ -4,9 +4,13 @@ RUN npm install http-server -g
 USER node
 WORKDIR /home/node
 RUN git clone https://github.com/facebook/flux.git
+ADD . /home/node/flux/examples/cpf-frontend
+USER root
+RUN chown -R node:node /home/node/flux/examples/cpf-frontend
+USER node
 WORKDIR /home/node/flux
 RUN npm install
-WORKDIR /home/node/flux/examples/flux-todomvc
+WORKDIR /home/node/flux/examples/cpf-frontend
 RUN npm install
 RUN npm run build
 ENTRYPOINT http-server . -p 3000
