@@ -66,6 +66,22 @@ services:
     volumes:
       - ./backup:/backup:rw
 
+  frontend:
+    restart: always
+    build: ./frontend
+    image: cpf/frontend
+    container_name: cpf-frontend
+    volumes:
+      - ./frontend:/home/node/app:rw
+    links:
+      - api
+    environment:
+      - VIRTUAL_HOST=cpf.mydomain.org
+      - VIRTUAL_NETWORK=nginx-proxy
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=cpfapi.mydomain.org
+      - LETSENCRYPT_EMAIL=cpfapi@mydomain.org
+
 volumes:
   conf-d:
   vhost-d:
