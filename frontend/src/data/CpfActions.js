@@ -33,9 +33,11 @@ const Actions = {
     });
   },
 
-  stopEditingCpf() {
+  stopEditingCpf(id, number) {
     CpfDispatcher.dispatch({
       type: CpfActionTypes.STOP_EDITING_CPF,
+      id,
+      number,
     });
   },
 

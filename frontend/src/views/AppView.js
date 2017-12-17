@@ -87,7 +87,7 @@ function CpfItem(props) {
     const onStopEditingCpf = props.onStopEditingCpf;
     const onKeyDown = (event) => {
       if (event.keyCode === ENTER_KEY_CODE) {
-        onStopEditingCpf();
+        onStopEditingCpf(cpf.id, event.target.value);
       }
     };
     input =

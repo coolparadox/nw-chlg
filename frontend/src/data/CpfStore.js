@@ -56,11 +56,10 @@ class CpfStore extends ReduceStore {
   reduce(state, action) {
     switch (action.type) {
       case CpfActionTypes.ADD_CPF:
-        // Don't add cpfs with no number.
         if (!action.number) {
           return state;
         }
-        const cpf = {
+        var cpf = {
           data: {
             cpf: action.number,
             is_cnpj: false,
@@ -82,7 +81,30 @@ class CpfStore extends ReduceStore {
         return this.getInitialState();
 
       case CpfActionTypes.EDIT_CPF:
+        console.log("CpfStore EDIT_CPF");
         return state.setIn([action.id, 'number'], action.number);
+
+      case CpfActionTypes.STOP_EDITING_CPF:
+        console.log("CpfStore STOP_EDITING_CPF");
+        if (!action.number) {
+          console.log("empty action number");
+          return this.getInitialState();
+        }
+        console.log("action number " + action.number);
+        cpf = {
+          data: {
+            cpf: action.number,
+            is_cnpj: false,
+            blacklisted: false,
+          },
+        };
+        console.log("action id " + action.id);
+        var http = new XMLHttpRequest();
+        http.open("PUT", theUrl + "/" + action.id, false);
+        http.setRequestHeader("Content-Type", "application/json");
+        http.send(JSON.stringify(cpf));
+        this.popHttpAlertIfNotStatus(http, 200);
+        return this.getInitialState();
 
       case CpfActionTypes.BLACKLIST_CPF:
         return state.update(

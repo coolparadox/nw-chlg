@@ -243,10 +243,17 @@ func UpdateCpf(w http.ResponseWriter, r *http.Request) {
 	context := NewContext()
 	defer context.Close()
 	c := context.DbCollection("cpfs")
+	repo := &data.CpfRepository{c}
+
+	// Safeguard against double entry
+	cpfData2, err := repo.GetCpfByCpf(cpfData.Cpf);
+	if err == nil && cpfData2.Id.Hex() != id {
+		common.DisplayAppError(w, fmt.Errorf("CPF/CNPJ found at id %v", cpfData2.Id), "Duplicated CPF/CNPJ", http.StatusConflict)
+		return
+	}
 
 	// Update cpf by id
-	repo := &data.CpfRepository{c}
-	cpfData2, err := repo.Update(id, cpfData)
+	cpfData2, err = repo.Update(id, cpfData)
 	if err != nil {
 		if err == mgo.ErrNotFound {
 			w.WriteHeader(http.StatusNotFound)
