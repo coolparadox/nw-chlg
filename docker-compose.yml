@@ -49,7 +49,7 @@ services:
     links:
       - db
     volumes:
-      - html-public:/root/public
+      - html-public:/root/public:ro
     environment:
       - VIRTUAL_HOST=cpf.mydomain.org
       - VIRTUAL_NETWORK=nginx-proxy
@@ -68,13 +68,7 @@ services:
     image: cpf/frontend
     container_name: cpf-frontend
     volumes:
-      - html-public:/home/node/public
-    #environment:
-      #- VIRTUAL_HOST=cpf.mydomain.org
-      #- VIRTUAL_NETWORK=nginx-proxy
-      #- VIRTUAL_PORT=3000
-      #- LETSENCRYPT_HOST=cpfapi.mydomain.org
-      #- LETSENCRYPT_EMAIL=cpfapi@mydomain.org
+      - html-public:/home/node/public:rw
 
 volumes:
   conf-d:

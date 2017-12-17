@@ -39,6 +39,9 @@ class CpfStore extends ReduceStore {
     // console.log(http.responseText);
     const cpfs = JSON.parse(http.responseText);
     // console.log(cpfs);
+
+    if (cpfs.data == null)
+      return answer;
     for (const cpf of cpfs.data) {
       // console.log(cpf);
       answer = answer.set(cpf.id, new Cpf({
@@ -72,7 +75,11 @@ class CpfStore extends ReduceStore {
         return this.getInitialState();
 
       case CpfActionTypes.DELETE_CPF:
-        return state.delete(action.id);
+        var http = new XMLHttpRequest();
+        http.open("DELETE", theUrl + "/" + action.id, false);
+        http.send();
+        this.popHttpAlertIfNotStatus(http, 204);
+        return this.getInitialState();
 
       case CpfActionTypes.EDIT_CPF:
         return state.setIn([action.id, 'number'], action.number);
