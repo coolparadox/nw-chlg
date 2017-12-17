@@ -67,12 +67,4 @@ This software is based on the marvellous third-party work:
 * [Flux Application Architecture](https://github.com/facebook/flux) by Facebook
 * [Docker + Nginx + Let's Encrypt](https://gilyes.com/docker-nginx-letsencrypt/) by George Ilyes
 * [Validação de CPF e CNPJ em Go](https://gopher.net.br/validacao-de-cpf-e-cnpj-em-go/) by Arthur Mastropietro
-
-
-known issues
-
-references and original work
-lets encrupt
-mondo rest golang
-flux react
-
+* [Example of Microservices in Go with Docker and MongoDB](https://github.com/mmorejon/microservices-docker-go-mongodb) by Manuel Morejón
