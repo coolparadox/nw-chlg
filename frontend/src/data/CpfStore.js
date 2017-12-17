@@ -39,11 +39,11 @@ class CpfStore extends ReduceStore {
       case CpfActionTypes.EDIT_CPF:
         return state.setIn([action.id, 'text'], action.text);
 
-      case CpfActionTypes.TOGGLE_ALL_CPFS:
+      case CpfActionTypes.BLACKLIST_ALL_CPFS:
         const areAllComplete = state.every(cpf => cpf.complete);
         return state.map(cpf => cpf.set('complete', !areAllComplete));
 
-      case CpfActionTypes.TOGGLE_CPF:
+      case CpfActionTypes.BLACKLIST_CPF:
         return state.update(
           action.id,
           cpf => cpf.set('complete', !cpf.complete),

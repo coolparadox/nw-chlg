@@ -35,11 +35,11 @@ function Main(props) {
     <section id="main">
       <input
         checked={areAllComplete ? 'checked' : ''}
-        id="toggle-all"
+        id="blacklist-all"
         type="checkbox"
-        onChange={props.onToggleAllCpfs}
+        onChange={props.onBlacklistAllCpfs}
       />
-      <label htmlFor="toggle-all">
+      <label htmlFor="blacklist-all">
         Mark all as complete
       </label>
       <ul id="cpf-list">
@@ -52,7 +52,7 @@ function Main(props) {
             onEditCpf={props.onEditCpf}
             onStartEditingCpf={props.onStartEditingCpf}
             onStopEditingCpf={props.onStopEditingCpf}
-            onToggleCpf={props.onToggleCpf}
+            onBlacklistCpf={props.onBlacklistCpf}
           />
         ))}
       </ul>
@@ -106,7 +106,7 @@ function NewCpf(props) {
     <input
       autoFocus={true}
       id="new-cpf"
-      placeholder="What needs to be done?"
+      placeholder="Enter new CPF / CNPJ"
       value={props.draft}
       onBlur={onBlur}
       onChange={onChange}
@@ -120,7 +120,7 @@ function CpfItem(props) {
   const isEditing = editing === cpf.id;
   const onDeleteCpf = () => props.onDeleteCpf(cpf.id);
   const onStartEditingCpf = () => props.onStartEditingCpf(cpf.id);
-  const onToggleCpf = () => props.onToggleCpf(cpf.id);
+  const onBlacklistCpf = () => props.onBlacklistCpf(cpf.id);
 
   // Construct the input for editing a task if necessary.
   let input = null;
@@ -151,10 +151,10 @@ function CpfItem(props) {
       })}>
       <div className="view">
         <input
-          className="toggle"
+          className="blacklist"
           type="checkbox"
           checked={cpf.complete}
-          onChange={onToggleCpf}
+          onChange={onBlacklistCpf}
         />
         <label onDoubleClick={onStartEditingCpf}>
           {cpf.text}

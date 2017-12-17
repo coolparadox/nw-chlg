@@ -45,15 +45,15 @@ const Actions = {
     });
   },
 
-  toggleAllCpfs() {
+  blacklistAllCpfs() {
     CpfDispatcher.dispatch({
-      type: CpfActionTypes.TOGGLE_ALL_CPFS,
+      type: CpfActionTypes.BLACKLIST_ALL_CPFS,
     });
   },
 
-  toggleCpf(id) {
+  blacklistCpf(id) {
     CpfDispatcher.dispatch({
-      type: CpfActionTypes.TOGGLE_CPF,
+      type: CpfActionTypes.BLACKLIST_CPF,
       id,
     });
   },
