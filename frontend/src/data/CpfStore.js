@@ -15,18 +15,28 @@ class CpfStore extends ReduceStore {
   getInitialState() {
 
     const url = "http://cpf.mydomain.org/cpfs";
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", url, true);
-    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhttp.onreadystatechange=function() {
-      if (xhttp.readyState==4 && xhttp.status==200) {
-        console.log(xhttp.status);
-        console.log(xhttp.responseText);
-      }
+    var http = new XMLHttpRequest();
+    http.open("GET", url, false);
+    http.setRequestHeader("Access-Control-Allow-Origin", "*");
+    http.send();
+    var answer = Immutable.OrderedMap();
+    // console.log(http.status);
+    if (http.status != 200) {
+      alert("Server error " + http.status + " " + http.statusText);
+      return answer;
     }
-    xhttp.send();
-
-    return Immutable.OrderedMap();
+    // console.log(http.responseText);
+    const cpfs = JSON.parse(http.responseText);
+    // console.log(cpfs);
+    for (const cpf of cpfs.data) {
+      // console.log(cpf);
+      answer = answer.set(cpf.id, new Cpf({
+        id: cpf.id,
+        number: cpf.cpf,
+        blacklisted: cpf.blacklisted,
+      }));
+    }
+    return answer;
   }
 
   reduce(state, action) {
