@@ -177,9 +177,6 @@ server {
 	include /etc/nginx/vhost.d/default;
 	{{ end }}
 
-	auth_basic "CPF API";
-	auth_basic_user_file /etc/nginx/htpasswd;
-
 	location / {
 		{{ if eq $proto "uwsgi" }}
 		include uwsgi_params;
@@ -214,9 +211,6 @@ server {
 	{{ else if (exists "/etc/nginx/vhost.d/default") }}
 	include /etc/nginx/vhost.d/default;
 	{{ end }}
-
-	auth_basic "CPF API";
-	auth_basic_user_file /etc/nginx/htpasswd;
 
 	location / {
 		{{ if eq $proto "uwsgi" }}

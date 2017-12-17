@@ -13,6 +13,19 @@ class CpfStore extends ReduceStore {
   }
 
   getInitialState() {
+
+    const url = "http://cpfapi.mydomain.org/cpfs";
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhttp.onreadystatechange=function() {
+      if (xhttp.readyState==4 && xhttp.status==200) {
+        console.log(xhttp.status);
+        console.log(xhttp.responseText);
+      }
+    }
+    xhttp.send();
+
     return Immutable.OrderedMap();
   }
 
