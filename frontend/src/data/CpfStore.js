@@ -15,6 +15,16 @@ class CpfStore extends ReduceStore {
     super(CpfDispatcher);
   }
 
+  popHttpAlert(http) {
+    alert(http.status + " " + http.statusText + "\n" + JSON.parse(http.responseText).data.message);
+  }
+
+  popHttpAlertIfNotStatus(http, status) {
+    if (http.status != status) {
+      this.popHttpAlert(http);
+    }
+  }
+
   getInitialState() {
 
     var answer = Immutable.OrderedMap();
@@ -23,7 +33,7 @@ class CpfStore extends ReduceStore {
     http.send();
     // console.log(http.status);
     if (http.status != 200) {
-      alert(http.status + " " + http.statusText + "\n" + JSON.parse(http.responseText).data.message);
+      this.popHttpAlert(http);
       return answer;
     }
     // console.log(http.responseText);
@@ -58,10 +68,7 @@ class CpfStore extends ReduceStore {
         http.open("POST", theUrl, false);
         http.setRequestHeader("Content-Type", "application/json");
         http.send(JSON.stringify(cpf));
-        if (http.status != 201) {
-          console.log
-          alert(http.status + " " + http.statusText + "\n" + JSON.parse(http.responseText).data.message);
-        }
+        this.popHttpAlertIfNotStatus(http, 201);
         return this.getInitialState();
 
       case CpfActionTypes.DELETE_CPF:
