@@ -9,10 +9,16 @@ This is a companion of a simple CPF/CNPJ (that's what we Brazilians use for offi
 * Add `127.0.1.1	cpf.mydomain.org` to `/etc/hosts`
 * Make sure there is no service using port 80 of your computer
 * Clone this repo
-* Run `docker-compose up --build`
+* Run `docker-compose up --build` inside repo directory
 
-[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
-and docker-compose
+At the first execution, docker will pull and build all required containers; this can take some time.
+When all services are started, the following links become available (*):
+
+* http://cpf.mydomain.org/cpfs - a RESTful http web API for inclusion and validation of CPF/CNPJ numbers. details
+* http://cpf.mydomain.org/status - statistics of the proxy web server. details
+* http://cpf.mydomain.org/ - a single page application for acessing /cpfs service. details
+
+(*) On password prompt, provide user `guest` and password `guest`.
 
 
 introduction
