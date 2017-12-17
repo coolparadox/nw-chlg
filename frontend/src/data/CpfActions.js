@@ -41,9 +41,9 @@ const Actions = {
     });
   },
 
-  blacklistCpf(id) {
+  toggleBlacklisted(id) {
     CpfDispatcher.dispatch({
-      type: CpfActionTypes.BLACKLIST_CPF,
+      type: CpfActionTypes.TOGGLE_BLACKLISTED,
       id,
     });
   },

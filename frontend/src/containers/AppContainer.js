@@ -26,7 +26,7 @@ function getState() {
     onEditCpf: CpfActions.editCpf,
     onStartEditingCpf: CpfActions.startEditingCpf,
     onStopEditingCpf: CpfActions.stopEditingCpf,
-    onBlacklistCpf: CpfActions.blacklistCpf,
+    onToggleBlacklisted: CpfActions.toggleBlacklisted,
     onUpdateDraft: CpfActions.updateDraft,
   };
 }

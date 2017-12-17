@@ -42,7 +42,7 @@ function Main(props) {
             onEditCpf={props.onEditCpf}
             onStartEditingCpf={props.onStartEditingCpf}
             onStopEditingCpf={props.onStopEditingCpf}
-            onBlacklistCpf={props.onBlacklistCpf}
+            onToggleBlacklisted={props.onToggleBlacklisted}
           />
         ))}
       </ul>
@@ -78,7 +78,7 @@ function CpfItem(props) {
   const isEditing = editing === cpf.id;
   const onDeleteCpf = () => props.onDeleteCpf(cpf.id);
   const onStartEditingCpf = () => props.onStartEditingCpf(cpf.id);
-  const onBlacklistCpf = () => props.onBlacklistCpf(cpf.id);
+  const onToggleBlacklisted = () => props.onToggleBlacklisted(cpf.id);
 
   // Construct the input for editing a task if necessary.
   let input = null;
@@ -112,7 +112,7 @@ function CpfItem(props) {
           className="blacklist"
           type="checkbox"
           checked={cpf.blacklisted}
-          onChange={onBlacklistCpf}
+          onChange={onToggleBlacklisted}
         />
         <label onDoubleClick={onStartEditingCpf}>
           {cpf.number}

@@ -106,8 +106,8 @@ class CpfStore extends ReduceStore {
         this.popHttpAlertIfNotStatus(http, 200);
         return this.getInitialState();
 
-      case CpfActionTypes.BLACKLIST_CPF:
-        console.log("CpfStore BLACKLIST_CPF " + action.id);
+      case CpfActionTypes.TOGGLE_BLACKLISTED:
+        console.log("CpfStore TOGGLE_BLACKLISTED " + action.id);
         var http = new XMLHttpRequest();
         http.open("GET", theUrl + "/" + action.id, false);
         http.send();
