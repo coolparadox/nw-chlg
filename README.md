@@ -20,7 +20,7 @@ When all services are started, the following links become available (*):
 
 (*) On password prompt, provide user `guest` and password `guest`.
 
-Refer to Cpf Urls document for further explanation on these links.
+Refer to [Cpf Urls](https://github.com/coolparadox/nw-chlg/wiki/Cpf-Urls) for further explanation about these links.
 
 ## Backup and Recovery
 
