@@ -29,7 +29,7 @@ function Main(props) {
   }
 
   // If this were expensive we could move it to the container.
-  const areAllComplete = props.cpfs.every(cpf => cpf.complete);
+  const areAllBlacklisted = props.cpfs.every(cpf => cpf.blacklisted);
 
   return (
     <section id="main">
@@ -56,17 +56,17 @@ function Footer(props) {
     return null;
   }
 
-  const remaining = props.cpfs.filter(cpf => !cpf.complete).size;
-  const completed = props.cpfs.size - remaining;
+  const remaining = props.cpfs.filter(cpf => !cpf.blacklisted).size;
+  const blacklisted = props.cpfs.size - remaining;
   const phrase = remaining === 1 ? ' item left' : ' items left';
 
-  let clearCompletedButton = null;
-  if (completed > 0) {
-    clearCompletedButton =
+  let clearBlacklistedButton = null;
+  if (blacklisted > 0) {
+    clearBlacklistedButton =
       <button
-        id="clear-completed"
-        onClick={props.onDeleteCompletedCpfs}>
-        Clear completed ({completed})
+        id="clear-blacklisted"
+        onClick={props.onDeleteBlacklistedCpfs}>
+        Clear blacklisted ({blacklisted})
       </button>
   }
 
@@ -78,7 +78,7 @@ function Footer(props) {
         </strong>
         {phrase}
       </span>
-      {clearCompletedButton}
+      {clearBlacklistedButton}
     </footer>
   );
 }
@@ -137,14 +137,14 @@ function CpfItem(props) {
   return (
     <li
       className={classnames({
-        completed: cpf.complete,
+        blacklisted: cpf.blacklisted,
         editing: isEditing,
       })}>
       <div className="view">
         <input
           className="blacklist"
           type="checkbox"
-          checked={cpf.complete}
+          checked={cpf.blacklisted}
           onChange={onBlacklistCpf}
         />
         <label onDoubleClick={onStartEditingCpf}>

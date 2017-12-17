@@ -27,11 +27,11 @@ class CpfStore extends ReduceStore {
         return state.set(id, new Cpf({
           id,
           text: action.text,
-          complete: false,
+          blacklisted: false,
         }));
 
       case CpfActionTypes.DELETE_COMPLETED_CPFS:
-        return state.filter(cpf => !cpf.complete);
+        return state.filter(cpf => !cpf.blacklisted);
 
       case CpfActionTypes.DELETE_CPF:
         return state.delete(action.id);
@@ -42,7 +42,7 @@ class CpfStore extends ReduceStore {
       case CpfActionTypes.BLACKLIST_CPF:
         return state.update(
           action.id,
-          cpf => cpf.set('complete', !cpf.complete),
+          cpf => cpf.set('blacklisted', !cpf.blacklisted),
         );
 
       default:

@@ -22,7 +22,7 @@ function getState() {
     cpfs: CpfStore.getState(),
 
     onAdd: CpfActions.addCpf,
-    onDeleteCompletedCpfs: CpfActions.deleteCompletedCpfs,
+    onDeleteBlacklistedCpfs: CpfActions.deleteBlacklistedCpfs,
     onDeleteCpf: CpfActions.deleteCpf,
     onEditCpf: CpfActions.editCpf,
     onStartEditingCpf: CpfActions.startEditingCpf,

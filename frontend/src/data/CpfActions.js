@@ -11,7 +11,7 @@ const Actions = {
     });
   },
 
-  deleteCompletedCpfs() {
+  deleteBlacklistedCpfs() {
     CpfDispatcher.dispatch({
       type: CpfActionTypes.DELETE_COMPLETED_CPFS,
     });
