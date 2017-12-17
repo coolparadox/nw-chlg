@@ -1,9 +1,6 @@
 {
-  "name": "flux-todomvc",
+  "name": "cpf-frontend",
   "version": "1.0.0",
-  "description": "Basic shell application for the Flux architecture",
-  "repository": "https://github.com/facebook/flux",
-  "author": "Kyle Davis",
   "main": "bundle.js",
   "scripts": {
     "build": "webpack ./src/root.js ./bundle.js",

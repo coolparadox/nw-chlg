@@ -1,12 +1,3 @@
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
 'use strict';
 
 import React from 'react';
@@ -26,19 +17,19 @@ function AppView(props) {
 function Header(props) {
   return (
     <header id="header">
-      <h1>todos</h1>
-      <NewTodo {...props} />
+      <h1>cpfs</h1>
+      <NewCpf {...props} />
     </header>
   );
 }
 
 function Main(props) {
-  if (props.todos.size === 0) {
+  if (props.cpfs.size === 0) {
     return null;
   }
 
   // If this were expensive we could move it to the container.
-  const areAllComplete = props.todos.every(todo => todo.complete);
+  const areAllComplete = props.cpfs.every(cpf => cpf.complete);
 
   return (
     <section id="main">
@@ -46,22 +37,22 @@ function Main(props) {
         checked={areAllComplete ? 'checked' : ''}
         id="toggle-all"
         type="checkbox"
-        onChange={props.onToggleAllTodos}
+        onChange={props.onToggleAllCpfs}
       />
       <label htmlFor="toggle-all">
         Mark all as complete
       </label>
-      <ul id="todo-list">
-        {[...props.todos.values()].reverse().map(todo => (
-          <TodoItem
-            key={todo.id}
+      <ul id="cpf-list">
+        {[...props.cpfs.values()].reverse().map(cpf => (
+          <CpfItem
+            key={cpf.id}
             editing={props.editing}
-            todo={todo}
-            onDeleteTodo={props.onDeleteTodo}
-            onEditTodo={props.onEditTodo}
-            onStartEditingTodo={props.onStartEditingTodo}
-            onStopEditingTodo={props.onStopEditingTodo}
-            onToggleTodo={props.onToggleTodo}
+            cpf={cpf}
+            onDeleteCpf={props.onDeleteCpf}
+            onEditCpf={props.onEditCpf}
+            onStartEditingCpf={props.onStartEditingCpf}
+            onStopEditingCpf={props.onStopEditingCpf}
+            onToggleCpf={props.onToggleCpf}
           />
         ))}
       </ul>
@@ -70,12 +61,12 @@ function Main(props) {
 }
 
 function Footer(props) {
-  if (props.todos.size === 0) {
+  if (props.cpfs.size === 0) {
     return null;
   }
 
-  const remaining = props.todos.filter(todo => !todo.complete).size;
-  const completed = props.todos.size - remaining;
+  const remaining = props.cpfs.filter(cpf => !cpf.complete).size;
+  const completed = props.cpfs.size - remaining;
   const phrase = remaining === 1 ? ' item left' : ' items left';
 
   let clearCompletedButton = null;
@@ -83,14 +74,14 @@ function Footer(props) {
     clearCompletedButton =
       <button
         id="clear-completed"
-        onClick={props.onDeleteCompletedTodos}>
+        onClick={props.onDeleteCompletedCpfs}>
         Clear completed ({completed})
       </button>
   }
 
   return (
     <footer id="footer">
-      <span id="todo-count">
+      <span id="cpf-count">
         <strong>
           {remaining}
         </strong>
@@ -102,19 +93,19 @@ function Footer(props) {
 }
 
 const ENTER_KEY_CODE = 13;
-function NewTodo(props) {
-  const addTodo = () => props.onAdd(props.draft);
-  const onBlur = () => addTodo();
+function NewCpf(props) {
+  const addCpf = () => props.onAdd(props.draft);
+  const onBlur = () => addCpf();
   const onChange = (event) => props.onUpdateDraft(event.target.value);
   const onKeyDown = (event) => {
     if (event.keyCode === ENTER_KEY_CODE) {
-      addTodo();
+      addCpf();
     }
   };
   return (
     <input
       autoFocus={true}
-      id="new-todo"
+      id="new-cpf"
       placeholder="What needs to be done?"
       value={props.draft}
       onBlur={onBlur}
@@ -124,29 +115,29 @@ function NewTodo(props) {
   );
 }
 
-function TodoItem(props) {
-  const {editing, todo} = props;
-  const isEditing = editing === todo.id;
-  const onDeleteTodo = () => props.onDeleteTodo(todo.id);
-  const onStartEditingTodo = () => props.onStartEditingTodo(todo.id);
-  const onToggleTodo = () => props.onToggleTodo(todo.id);
+function CpfItem(props) {
+  const {editing, cpf} = props;
+  const isEditing = editing === cpf.id;
+  const onDeleteCpf = () => props.onDeleteCpf(cpf.id);
+  const onStartEditingCpf = () => props.onStartEditingCpf(cpf.id);
+  const onToggleCpf = () => props.onToggleCpf(cpf.id);
 
   // Construct the input for editing a task if necessary.
   let input = null;
   if (isEditing) {
-    const onChange = (event) => props.onEditTodo(todo.id, event.target.value);
-    const onStopEditingTodo = props.onStopEditingTodo;
+    const onChange = (event) => props.onEditCpf(cpf.id, event.target.value);
+    const onStopEditingCpf = props.onStopEditingCpf;
     const onKeyDown = (event) => {
       if (event.keyCode === ENTER_KEY_CODE) {
-        onStopEditingTodo();
+        onStopEditingCpf();
       }
     };
     input =
       <input
         autoFocus={true}
         className="edit"
-        value={todo.text}
-        onBlur={onStopEditingTodo}
+        value={cpf.text}
+        onBlur={onStopEditingCpf}
         onChange={onChange}
         onKeyDown={onKeyDown}
       />;
@@ -155,20 +146,20 @@ function TodoItem(props) {
   return (
     <li
       className={classnames({
-        completed: todo.complete,
+        completed: cpf.complete,
         editing: isEditing,
       })}>
       <div className="view">
         <input
           className="toggle"
           type="checkbox"
-          checked={todo.complete}
-          onChange={onToggleTodo}
+          checked={cpf.complete}
+          onChange={onToggleCpf}
         />
-        <label onDoubleClick={onStartEditingTodo}>
-          {todo.text}
+        <label onDoubleClick={onStartEditingCpf}>
+          {cpf.text}
         </label>
-        <button className="destroy" onClick={onDeleteTodo} />
+        <button className="destroy" onClick={onDeleteCpf} />
       </div>
       {input}
     </li>

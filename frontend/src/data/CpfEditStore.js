@@ -10,12 +10,12 @@
 'use strict';
 
 import {ReduceStore} from 'flux/utils';
-import TodoActionTypes from './TodoActionTypes';
-import TodoDispatcher from './TodoDispatcher';
+import CpfActionTypes from './CpfActionTypes';
+import CpfDispatcher from './CpfDispatcher';
 
-class TodoDraftStore extends ReduceStore {
+class CpfEditStore extends ReduceStore {
   constructor() {
-    super(TodoDispatcher);
+    super(CpfDispatcher);
   }
 
   getInitialState() {
@@ -24,11 +24,11 @@ class TodoDraftStore extends ReduceStore {
 
   reduce(state, action) {
     switch (action.type) {
-      case TodoActionTypes.ADD_TODO:
-        return '';
+      case CpfActionTypes.START_EDITING_CPF:
+        return action.id;
 
-      case TodoActionTypes.UPDATE_DRAFT:
-        return action.text;
+      case CpfActionTypes.STOP_EDITING_CPF:
+        return '';
 
       default:
         return state;
@@ -36,4 +36,4 @@ class TodoDraftStore extends ReduceStore {
   }
 }
 
-export default new TodoDraftStore();
+export default new CpfEditStore();
