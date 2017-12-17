@@ -60,6 +60,14 @@ Please refer to ... for details on the architecture of this software.
 * There are no authorization levels (eg. read only users versus admins).
 * The frontend demonstrates Flux + React pattern and RESTful access by managing only CPF / CNPJ numbers; for production  more fields would have to be supported (eg: name, contact info etc.)
 
+## References and Original Work
+
+This software is based on the marvellous third-party work:
+
+* [Flux Application Architecture](https://github.com/facebook/flux) by Facebook
+* [Docker + Nginx + Let's Encrypt](https://gilyes.com/docker-nginx-letsencrypt/) by George Ilyes
+* [Validação de CPF e CNPJ em Go](https://gopher.net.br/validacao-de-cpf-e-cnpj-em-go/) by Arthur Mastropietro
+
 
 known issues
 
