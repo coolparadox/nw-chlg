@@ -9,7 +9,6 @@ function AppView(props) {
     <div>
       <Header {...props} />
       <Main {...props} />
-      <Footer {...props} />
     </div>
   );
 }
@@ -48,38 +47,6 @@ function Main(props) {
         ))}
       </ul>
     </section>
-  );
-}
-
-function Footer(props) {
-  if (props.cpfs.size === 0) {
-    return null;
-  }
-
-  const remaining = props.cpfs.filter(cpf => !cpf.blacklisted).size;
-  const blacklisted = props.cpfs.size - remaining;
-  const phrase = remaining === 1 ? ' item left' : ' items left';
-
-  let clearBlacklistedButton = null;
-  if (blacklisted > 0) {
-    clearBlacklistedButton =
-      <button
-        id="clear-blacklisted"
-        onClick={props.onDeleteBlacklistedCpfs}>
-        Clear blacklisted ({blacklisted})
-      </button>
-  }
-
-  return (
-    <footer id="footer">
-      <span id="cpf-count">
-        <strong>
-          {remaining}
-        </strong>
-        {phrase}
-      </span>
-      {clearBlacklistedButton}
-    </footer>
   );
 }
 

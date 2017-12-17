@@ -30,9 +30,6 @@ class CpfStore extends ReduceStore {
           blacklisted: false,
         }));
 
-      case CpfActionTypes.DELETE_COMPLETED_CPFS:
-        return state.filter(cpf => !cpf.blacklisted);
-
       case CpfActionTypes.DELETE_CPF:
         return state.delete(action.id);
 

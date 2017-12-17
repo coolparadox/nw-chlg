@@ -11,12 +11,6 @@ const Actions = {
     });
   },
 
-  deleteBlacklistedCpfs() {
-    CpfDispatcher.dispatch({
-      type: CpfActionTypes.DELETE_COMPLETED_CPFS,
-    });
-  },
-
   deleteCpf(id) {
     CpfDispatcher.dispatch({
       type: CpfActionTypes.DELETE_CPF,

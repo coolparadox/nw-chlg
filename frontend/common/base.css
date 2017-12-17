@@ -225,7 +225,7 @@ input[type="checkbox"] {
 	transition: color 0.4s;
 }
 
-#cpf-list li.completed label {
+#cpf-list li.blacklisted label {
 	color: #a9a9a9;
 	text-decoration: line-through;
 }
@@ -324,7 +324,7 @@ input[type="checkbox"] {
 	font-weight: bold;
 }
 
-#clear-completed {
+#clear-blacklisted {
 	float: right;
 	position: relative;
 	line-height: 20px;
@@ -336,7 +336,7 @@ input[type="checkbox"] {
 	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.2);
 }
 
-#clear-completed:hover {
+#clear-blacklisted:hover {
 	background: rgba(0, 0, 0, 0.15);
 	box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.3);
 }
