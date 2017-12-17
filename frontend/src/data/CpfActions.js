@@ -45,12 +45,6 @@ const Actions = {
     });
   },
 
-  blacklistAllCpfs() {
-    CpfDispatcher.dispatch({
-      type: CpfActionTypes.BLACKLIST_ALL_CPFS,
-    });
-  },
-
   blacklistCpf(id) {
     CpfDispatcher.dispatch({
       type: CpfActionTypes.BLACKLIST_CPF,

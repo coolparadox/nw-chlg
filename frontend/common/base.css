@@ -149,31 +149,6 @@ input[type="checkbox"] {
 	border-top: 1px dotted #adadad;
 }
 
-label[for='blacklist-all'] {
-	display: none;
-}
-
-#blacklist-all {
-	position: absolute;
-	top: -42px;
-	left: -4px;
-	width: 40px;
-	text-align: center;
-	/* Mobile Safari */
-	border: none;
-}
-
-#blacklist-all:before {
-	content: '»';
-	font-size: 28px;
-	color: #d9d9d9;
-	padding: 0 25px 7px;
-}
-
-#blacklist-all:checked:before {
-	color: #737373;
-}
-
 #cpf-list {
 	margin: 0;
 	padding: 0;
@@ -384,25 +359,12 @@ label[for='blacklist-all'] {
 */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-	#blacklist-all,
 	#cpf-list li .blacklist {
 		background: none;
 	}
 
 	#cpf-list li .blacklist {
 		height: 40px;
-	}
-
-	#blacklist-all {
-		top: -56px;
-		left: -15px;
-		width: 65px;
-		height: 41px;
-		-webkit-transform: rotate(90deg);
-		-ms-transform: rotate(90deg);
-		transform: rotate(90deg);
-		-webkit-appearance: none;
-		appearance: none;
 	}
 }
 

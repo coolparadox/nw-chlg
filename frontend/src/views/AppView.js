@@ -33,15 +33,6 @@ function Main(props) {
 
   return (
     <section id="main">
-      <input
-        checked={areAllComplete ? 'checked' : ''}
-        id="blacklist-all"
-        type="checkbox"
-        onChange={props.onBlacklistAllCpfs}
-      />
-      <label htmlFor="blacklist-all">
-        Mark all as complete
-      </label>
       <ul id="cpf-list">
         {[...props.cpfs.values()].reverse().map(cpf => (
           <CpfItem
