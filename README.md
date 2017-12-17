@@ -14,11 +14,13 @@ This is a companion of a simple CPF/CNPJ (that's what we Brazilians use for offi
 At the first execution, docker will pull and build all required containers; this can take some time.
 When all services are started, the following links become available (*):
 
-* http://cpf.mydomain.org/cpfs - a RESTful http web API for inclusion and validation of CPF/CNPJ numbers. details
-* http://cpf.mydomain.org/status - statistics of the proxy web server. details
-* http://cpf.mydomain.org/ - a single page application for acessing /cpfs service. details
+* http://cpf.mydomain.org/cpfs - a RESTful http web API for inclusion and validation of CPF/CNPJ numbers.
+* http://cpf.mydomain.org/status - statistics of the proxy web server.
+* http://cpf.mydomain.org/ - a single page application for acessing /cpfs service. [screenshot](https://github.com/coolparadox/nw-chlg/blob/master/doc/frontend_screenshot.png)
 
 (*) On password prompt, provide user `guest` and password `guest`.
+
+Refer to Cpf Urls document for further explanation on these links.
 
 ## Backup and Recovery
 
