@@ -44,7 +44,9 @@ This system makes automatic use of [Let’s Encrypt](https://letsencrypt.org/) a
 
 This process should render a valid service in https port of your machine.
 
-passwords
+## Authentication
+
+A basic user / password authentication is in place; file `proxy/htpasswd` can be manipulated with `htpasswd` command for management of users and passwords for a single level of authentication.
 
 architecture
 
@@ -59,3 +61,4 @@ references and original work
 lets encrupt
 mondo rest golang
 flux react
+
