@@ -1,0 +1,13 @@
+digraph services {
+	overlap = scale;
+	label = "microservices relationship";
+	world [label="the\nworld",shape=box];
+	nginx -> world [label="http / https"];
+	nginx_gen -> nginx [label="configuration"];
+	letsencrypt -> nginx [label="TLS certificates"];
+	api -> nginx [label="cpfs restful\nservice"];
+	api -> nginx [label="frontend static\ncontent"];
+	db -> api [label="data storage"];
+	frontend -> api [label="build app"];
+}
+
