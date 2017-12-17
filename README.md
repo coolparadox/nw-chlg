@@ -36,19 +36,26 @@ Restoring from sample.mongodump.gz in backup directory...
 2017-12-17T22:36:45.017+0000	finished restoring cpfs.cpfs (3 documents)
 2017-12-17T22:36:45.017+0000	done
 ```
-Note that restoring a backup erares all previous data from the database.
-introduction
+Note that restoring a backup erases all previous data from the database.
 
-quick setup instructions
+## Enabling Https for the Wild
 
-backup recovery
+This system makes automatic use of [Let’s Encrypt](https://letsencrypt.org/) authority to get valid certificates for encryption of https data. For this to be enabled, you must have a publicly available domain and email. If this is your case, edit `docker-compose.yml` and `frontend/src/data/CpfStore.js`, replacing occurrences of the fake domain and email by valid ones, and restart the services.
 
-enabling https in the wild
+This process should render a valid service in https port of your machine.
+
+passwords
 
 architecture
 
-wishlist
+wishlist / known issues
+authorization, only one layer of passrods
+more fields to be added to Cpf model and exteriorized by frontend
+
 
 known issues
 
 references and original work
+lets encrupt
+mondo rest golang
+flux react
