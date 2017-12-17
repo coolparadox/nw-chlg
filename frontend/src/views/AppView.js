@@ -16,7 +16,7 @@ function AppView(props) {
 function Header(props) {
   return (
     <header id="header">
-      <h1>cpfs</h1>
+      <h1>cpfs!!</h1>
       <NewCpf {...props} />
     </header>
   );
@@ -26,9 +26,6 @@ function Main(props) {
   if (props.cpfs.size === 0) {
     return null;
   }
-
-  // If this were expensive we could move it to the container.
-  const areAllBlacklisted = props.cpfs.every(cpf => cpf.blacklisted);
 
   return (
     <section id="main">

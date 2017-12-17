@@ -215,6 +215,7 @@ input[type="checkbox"] {
 }
 
 #cpf-list li label {
+	color: #1d541b;
 	white-space: pre;
 	word-break: break-word;
 	padding: 15px 60px 15px 15px;
@@ -226,7 +227,7 @@ input[type="checkbox"] {
 }
 
 #cpf-list li.blacklisted label {
-	color: #a9a9a9;
+	color: #d17c7c;
 	text-decoration: line-through;
 }
 
