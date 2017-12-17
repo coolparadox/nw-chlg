@@ -51,6 +51,7 @@ func (r *CpfRepository) Delete(id string) error {
 }
 
 func (r *CpfRepository) Update(id string, cpf *models.Cpf) (models.Cpf, error) {
+  // log.Printf("Update %v %v", id, *cpf);
 	if !bson.IsObjectIdHex(id) {
 		return *cpf, mgo.ErrNotFound
 	}
@@ -63,11 +64,17 @@ func (r *CpfRepository) Update(id string, cpf *models.Cpf) (models.Cpf, error) {
 			"comment": cpf.Comment,
 			},
 		})
+  if err != nil {
+    // log.Printf("UpdateId error %v", err)
+    return *cpf, err
+  }
 	var answer models.Cpf
-	err2 := r.C.FindId(bson.ObjectIdHex(id)).One(&answer)
-	if err2 != nil {
-		answer = *cpf
+	err = r.C.FindId(bson.ObjectIdHex(id)).One(&answer)
+	if err != nil {
+    // log.Printf("FindId error %v", err)
+    return *cpf, err
 	}
+  // log.Printf("answer %v", answer)
 	return answer, err
 }
 

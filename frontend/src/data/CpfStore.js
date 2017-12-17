@@ -55,7 +55,9 @@ class CpfStore extends ReduceStore {
 
   reduce(state, action) {
     switch (action.type) {
+
       case CpfActionTypes.ADD_CPF:
+        console.log("CpfStore ADD_CPF " + action.number);
         if (!action.number) {
           return state;
         }
@@ -70,7 +72,24 @@ class CpfStore extends ReduceStore {
         http.open("POST", theUrl, false);
         http.setRequestHeader("Content-Type", "application/json");
         http.send(JSON.stringify(cpf));
-        this.popHttpAlertIfNotStatus(http, 201);
+        var httpStatus = http.status;
+        var responseText = JSON.parse(http.responseText).data.message;
+        // console.log(" " + httpStatus + " " + responseText);
+        if (httpStatus == 400) {
+          // Number may be a CNPJ instead of a CPF
+          cpf.data.is_cnpj = true;
+          var http = new XMLHttpRequest();
+          http.open("POST", theUrl, false);
+          http.setRequestHeader("Content-Type", "application/json");
+          http.send(JSON.stringify(cpf));
+          httpStatus = http.status;
+          responseText = responseText + "\n" + JSON.parse(http.responseText).data.message;
+          // console.log(" " + httpStatus + " " + responseText);
+        }
+        // console.log(" " + httpStatus + " " + responseText);
+        if (httpStatus != 201) {
+          alert(httpStatus + " " + http.statusText + "\n" + responseText);
+        }
         return this.getInitialState();
 
       case CpfActionTypes.DELETE_CPF:
@@ -88,7 +107,7 @@ class CpfStore extends ReduceStore {
         return state.setIn([action.id, 'number'], action.number);
 
       case CpfActionTypes.STOP_EDITING_CPF:
-        console.log("CpfStore STOP_EDITING_CPF");
+        console.log("CpfStore STOP_EDITING_CPF " + action.id + action.number);
         if (!action.number) {
           console.log("empty action number");
           return this.getInitialState();
@@ -106,7 +125,21 @@ class CpfStore extends ReduceStore {
         http.open("PUT", theUrl + "/" + action.id, false);
         http.setRequestHeader("Content-Type", "application/json");
         http.send(JSON.stringify(cpf));
-        this.popHttpAlertIfNotStatus(http, 200);
+        var httpStatus = http.status;
+        var responseText = JSON.parse(http.responseText).data.message;
+        if (httpStatus == 400) {
+          // Number may be a CNPJ instead of a CPF
+          cpf.data.is_cnpj = true;
+          var http = new XMLHttpRequest();
+          http.open("PUT", theUrl + "/" + action.id, false);
+          http.setRequestHeader("Content-Type", "application/json");
+          http.send(JSON.stringify(cpf));
+          httpStatus = http.status;
+          responseText = responseText + "\n" + JSON.parse(http.responseText).data.message;
+        }
+        if (httpStatus != 200) {
+          alert(httpStatus + " " + http.statusText + "\n" + responseText);
+        }
         return this.getInitialState();
 
       case CpfActionTypes.TOGGLE_BLACKLISTED:
@@ -119,7 +152,7 @@ class CpfStore extends ReduceStore {
           return this.getInitialState();
         }
         var cpf = JSON.parse(http.responseText);
-        // console.log(cpf);
+        console.log(cpf);
         cpf.data.blacklisted = !cpf.data.blacklisted;
         http.open("PUT", theUrl + "/" + action.id, false);
         http.setRequestHeader("Content-Type", "application/json");

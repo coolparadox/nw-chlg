@@ -231,6 +231,7 @@ func UpdateCpf(w http.ResponseWriter, r *http.Request) {
 		}
 		cpfData.Cpf = sanitized_cpf;
 	} else {
+    cpfData.IsCnpj = false;
 		sanitized_cpf, err := models.ValidateCpf(cpfData.Cpf);
 		if err != nil {
 			common.DisplayAppError(w, err, "Invalid CPF", http.StatusBadRequest)
