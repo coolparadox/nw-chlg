@@ -74,6 +74,9 @@ class CpfStore extends ReduceStore {
         return this.getInitialState();
 
       case CpfActionTypes.DELETE_CPF:
+        const ok = confirm("Are you sure you want to delete this entry?");
+        if (!ok)
+          return this.getInitialState();
         var http = new XMLHttpRequest();
         http.open("DELETE", theUrl + "/" + action.id, false);
         http.send();
