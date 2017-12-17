@@ -19,7 +19,7 @@ class CpfDraftStore extends ReduceStore {
         return '';
 
       case CpfActionTypes.UPDATE_DRAFT:
-        return action.text;
+        return action.number;
 
       default:
         return state;

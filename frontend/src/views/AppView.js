@@ -94,7 +94,7 @@ function CpfItem(props) {
       <input
         autoFocus={true}
         className="edit"
-        value={cpf.text}
+        value={cpf.number}
         onBlur={onStopEditingCpf}
         onChange={onChange}
         onKeyDown={onKeyDown}
@@ -115,7 +115,7 @@ function CpfItem(props) {
           onChange={onBlacklistCpf}
         />
         <label onDoubleClick={onStartEditingCpf}>
-          {cpf.text}
+          {cpf.number}
         </label>
         <button className="destroy" onClick={onDeleteCpf} />
       </div>

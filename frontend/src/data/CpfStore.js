@@ -19,14 +19,14 @@ class CpfStore extends ReduceStore {
   reduce(state, action) {
     switch (action.type) {
       case CpfActionTypes.ADD_CPF:
-        // Don't add cpfs with no text.
-        if (!action.text) {
+        // Don't add cpfs with no number.
+        if (!action.number) {
           return state;
         }
         const id = Counter.increment();
         return state.set(id, new Cpf({
           id,
-          text: action.text,
+          number: action.number,
           blacklisted: false,
         }));
 
@@ -34,7 +34,7 @@ class CpfStore extends ReduceStore {
         return state.delete(action.id);
 
       case CpfActionTypes.EDIT_CPF:
-        return state.setIn([action.id, 'text'], action.text);
+        return state.setIn([action.id, 'number'], action.number);
 
       case CpfActionTypes.BLACKLIST_CPF:
         return state.update(

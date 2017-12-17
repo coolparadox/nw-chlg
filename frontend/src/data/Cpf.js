@@ -5,7 +5,7 @@ import Immutable from 'immutable';
 const Cpf = Immutable.Record({
   id: '',
   blacklisted: false,
-  text: '',
+  number: '',
 });
 
 export default Cpf;

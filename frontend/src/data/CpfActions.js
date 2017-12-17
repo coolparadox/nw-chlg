@@ -4,10 +4,10 @@ import CpfActionTypes from './CpfActionTypes';
 import CpfDispatcher from './CpfDispatcher';
 
 const Actions = {
-  addCpf(text) {
+  addCpf(number) {
     CpfDispatcher.dispatch({
       type: CpfActionTypes.ADD_CPF,
-      text,
+      number,
     });
   },
 
@@ -18,11 +18,11 @@ const Actions = {
     });
   },
 
-  editCpf(id, text) {
+  editCpf(id, number) {
     CpfDispatcher.dispatch({
       type: CpfActionTypes.EDIT_CPF,
       id,
-      text,
+      number,
     });
   },
 
@@ -46,10 +46,10 @@ const Actions = {
     });
   },
 
-  updateDraft(text) {
+  updateDraft(number) {
     CpfDispatcher.dispatch({
       type: CpfActionTypes.UPDATE_DRAFT,
-      text,
+      number,
     });
   },
 };
