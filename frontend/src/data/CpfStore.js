@@ -7,22 +7,23 @@ import Cpf from './Cpf';
 import CpfActionTypes from './CpfActionTypes';
 import CpfDispatcher from './CpfDispatcher';
 
+const theUrl = "http://cpf.mydomain.org/cpfs";
+
 class CpfStore extends ReduceStore {
+
   constructor() {
     super(CpfDispatcher);
   }
 
   getInitialState() {
 
-    const url = "http://cpf.mydomain.org/cpfs";
-    var http = new XMLHttpRequest();
-    http.open("GET", url, false);
-    http.setRequestHeader("Access-Control-Allow-Origin", "*");
-    http.send();
     var answer = Immutable.OrderedMap();
+    var http = new XMLHttpRequest();
+    http.open("GET", theUrl, false);
+    http.send();
     // console.log(http.status);
     if (http.status != 200) {
-      alert("Server error " + http.status + " " + http.statusText);
+      alert(http.status + " " + http.statusText + "\n" + JSON.parse(http.responseText).data.message);
       return answer;
     }
     // console.log(http.responseText);
@@ -46,12 +47,22 @@ class CpfStore extends ReduceStore {
         if (!action.number) {
           return state;
         }
-        const id = Counter.increment();
-        return state.set(id, new Cpf({
-          id,
-          number: action.number,
-          blacklisted: false,
-        }));
+        const cpf = {
+          data: {
+            cpf: action.number,
+            is_cnpj: false,
+            blacklisted: false,
+          },
+        };
+        var http = new XMLHttpRequest();
+        http.open("POST", theUrl, false);
+        http.setRequestHeader("Content-Type", "application/json");
+        http.send(JSON.stringify(cpf));
+        if (http.status != 201) {
+          console.log
+          alert(http.status + " " + http.statusText + "\n" + JSON.parse(http.responseText).data.message);
+        }
+        return this.getInitialState();
 
       case CpfActionTypes.DELETE_CPF:
         return state.delete(action.id);
