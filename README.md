@@ -48,11 +48,17 @@ This process should render a valid service in https port of your machine.
 
 A basic user / password authentication is in place; file `proxy/htpasswd` can be manipulated with `htpasswd` command for management of users and passwords for a single level of authentication.
 
-architecture
+The cloned version of this file contains one user `guest` with password `guest`.
 
-wishlist / known issues
-authorization, only one layer of passrods
-more fields to be added to Cpf model and exteriorized by frontend
+## Architecture
+
+Please refer to ... for details on the architecture of this software.
+
+## Wishlist / Known Issues
+
+* Real world acquisiton of valid Lets's Encrypt certificates is yet to be tested.
+* There are no authorization levels (eg. read only users versus admins).
+* The frontend demonstrates Flux + React pattern and RESTful access by managing only CPF / CNPJ numbers; for production  more fields would have to be supported (eg: name, contact info etc.)
 
 
 known issues
