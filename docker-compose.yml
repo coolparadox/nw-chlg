@@ -51,11 +51,11 @@ services:
     volumes:
       - html-public:/root/public
     environment:
-      - VIRTUAL_HOST=cpfapi.mydomain.org
+      - VIRTUAL_HOST=cpf.mydomain.org
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=3000
-      - LETSENCRYPT_HOST=cpfapi.mydomain.org
-      - LETSENCRYPT_EMAIL=cpfapi@mydomain.org
+      - LETSENCRYPT_HOST=cpf.mydomain.org
+      - LETSENCRYPT_EMAIL=cpf@mydomain.org
 
   db:
     image: mongo:3.6.0-jessie

@@ -14,7 +14,7 @@ class CpfStore extends ReduceStore {
 
   getInitialState() {
 
-    const url = "http://cpfapi.mydomain.org/cpfs";
+    const url = "http://cpf.mydomain.org/cpfs";
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", url, true);
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
