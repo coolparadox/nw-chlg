@@ -54,6 +54,14 @@ const Actions = {
       number,
     });
   },
+
+  updateFilter(filterText) {
+    CpfDispatcher.dispatch({
+      type: CpfActionTypes.UPDATE_FILTER,
+      filterText,
+    });
+  },
+
 };
 
 export default Actions;

@@ -152,13 +152,39 @@ class CpfStore extends ReduceStore {
           return this.getInitialState();
         }
         var cpf = JSON.parse(http.responseText);
-        console.log(cpf);
+        // console.log(cpf);
         cpf.data.blacklisted = !cpf.data.blacklisted;
         http.open("PUT", theUrl + "/" + action.id, false);
         http.setRequestHeader("Content-Type", "application/json");
         http.send(JSON.stringify(cpf));
         this.popHttpAlertIfNotStatus(http, 200);
         return this.getInitialState();
+
+      case CpfActionTypes.UPDATE_FILTER:
+        console.log("CpfStore UPDATE_FILTER " + action.filterText);
+        var answer = Immutable.OrderedMap();
+        var http = new XMLHttpRequest();
+        http.open("GET", theUrl, false);
+        http.send();
+        if (http.status != 200) {
+          this.popHttpAlert(http);
+          return answer;
+        }
+        const cpfs = JSON.parse(http.responseText);
+        // console.log(cpfs);
+
+        if (cpfs.data == null)
+          return answer;
+        for (const cpf of cpfs.data) {
+          // console.log(cpf);
+          if (cpf.cpf.toLowerCase().includes(action.filterText.toLowerCase()))
+            answer = answer.set(cpf.id, new Cpf({
+              id: cpf.id,
+              number: cpf.cpf,
+              blacklisted: cpf.blacklisted,
+            }));
+        }
+        return answer;
 
       default:
         return state;

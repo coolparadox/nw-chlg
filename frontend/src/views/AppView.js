@@ -17,6 +17,7 @@ function Header(props) {
   return (
     <header id="header">
       <h1>cpfs!!</h1>
+      <CpfFilter {...props} />
       <NewCpf {...props} />
     </header>
   );
@@ -66,6 +67,19 @@ function NewCpf(props) {
       onBlur={onBlur}
       onChange={onChange}
       onKeyDown={onKeyDown}
+    />
+  );
+}
+
+function CpfFilter(props) {
+  const onChange = (event) => props.onUpdateFilter(event.target.value);
+  return (
+    <input
+      autoFocus={true}
+      id="filter-cpf"
+      placeholder="Search by"
+      value={props.filter}
+      onChange={onChange}
     />
   );
 }
