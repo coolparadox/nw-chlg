@@ -84,6 +84,20 @@ function CpfFilter(props) {
   );
 }
 
+function formatCpf(text) {
+  console.log ("formatCpf " + text + ", length " + text.length);
+  switch (text.length) {
+    case 11:
+      // Assume it's a CPF number
+      return text.substr(0, 3) + "." + text.substr(3, 3) + "." + text.substr(6, 3) + "-" + text.substr(9);
+    case 14:
+      // Assume it's a CNPJ number
+      return text.substr(0, 2) + "." + text.substr(2, 3) + "." + text.substr(5, 3) + "/" + text.substr(8, 4) + "-" + text.substr(12);
+    default:
+      return text;
+  }
+}
+
 function CpfItem(props) {
   const {editing, cpf} = props;
   const isEditing = editing === cpf.id;
@@ -126,7 +140,7 @@ function CpfItem(props) {
           onChange={onToggleBlacklisted}
         />
         <label onDoubleClick={onStartEditingCpf}>
-          {cpf.number}
+          {formatCpf(cpf.number)}
         </label>
         <button className="destroy" onClick={onDeleteCpf} />
       </div>
