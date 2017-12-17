@@ -1,7 +1,11 @@
-Cause I have prayed, I just behave
+quick instructions
 
-Cause saints and sinners are quite the same
+references
 
-Cause it's my temple, the whole wide world
+https config
 
-That's why I think I am a real religious man
+backup recovery
+
+wishlist
+
+known issues
