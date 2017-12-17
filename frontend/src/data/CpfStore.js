@@ -90,15 +90,15 @@ class CpfStore extends ReduceStore {
           console.log("empty action number");
           return this.getInitialState();
         }
-        console.log("action number " + action.number);
-        cpf = {
+        // console.log("action number " + action.number);
+        var cpf = {
           data: {
             cpf: action.number,
             is_cnpj: false,
             blacklisted: false,
           },
         };
-        console.log("action id " + action.id);
+        // console.log("action id " + action.id);
         var http = new XMLHttpRequest();
         http.open("PUT", theUrl + "/" + action.id, false);
         http.setRequestHeader("Content-Type", "application/json");
@@ -107,10 +107,22 @@ class CpfStore extends ReduceStore {
         return this.getInitialState();
 
       case CpfActionTypes.BLACKLIST_CPF:
-        return state.update(
-          action.id,
-          cpf => cpf.set('blacklisted', !cpf.blacklisted),
-        );
+        console.log("CpfStore BLACKLIST_CPF " + action.id);
+        var http = new XMLHttpRequest();
+        http.open("GET", theUrl + "/" + action.id, false);
+        http.send();
+        if (http.status != 200) {
+          this.popHttpAlert(http);
+          return this.getInitialState();
+        }
+        var cpf = JSON.parse(http.responseText);
+        // console.log(cpf);
+        cpf.data.blacklisted = !cpf.data.blacklisted;
+        http.open("PUT", theUrl + "/" + action.id, false);
+        http.setRequestHeader("Content-Type", "application/json");
+        http.send(JSON.stringify(cpf));
+        this.popHttpAlertIfNotStatus(http, 200);
+        return this.getInitialState();
 
       default:
         return state;
