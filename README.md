@@ -54,7 +54,7 @@ The cloned version of this file contains one user `guest` with password `guest`.
 
 ## Architecture
 
-Please refer to ... for details on the architecture of this software.
+Please refer to [Architecture wiki](https://github.com/coolparadox/nw-chlg/wiki/Architecture) for details on the architecture of this software.
 
 ## Wishlist / Known Issues
 
