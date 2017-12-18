@@ -22,6 +22,43 @@ When all services are started, the following links become available (*):
 
 Refer to [Cpf Urls](https://github.com/coolparadox/nw-chlg/wiki/Cpf-Urls) for further explanation about these links.
 
+## Run Tests in Api Service
+
+Script `api/test_api.sh` performs unit tests in the Rest `/cpfs` service, and can be used to confirm the installation of this service was successful:
+
+```
+$ ./api/test_api.sh
+{ "dropped" : "cpfs", "ok" : 1 }
+=== RUN   TestGetAll
+--- PASS: TestGetAll (0.00s)
+=== RUN   TestAddInvalidCpf
+--- PASS: TestAddInvalidCpf (0.00s)
+=== RUN   TestAddInvalidCnpj
+--- PASS: TestAddInvalidCnpj (0.00s)
+=== RUN   TestAddCpf
+--- PASS: TestAddCpf (0.22s)
+=== RUN   TestAddCnpj
+--- PASS: TestAddCnpj (0.00s)
+=== RUN   TestAddSameCpf
+--- PASS: TestAddSameCpf (0.00s)
+=== RUN   TestAddSameCnpj
+--- PASS: TestAddSameCnpj (0.00s)
+=== RUN   TestGetByCpf
+--- PASS: TestGetByCpf (0.00s)
+=== RUN   TestGetByAbsentCpf
+--- PASS: TestGetByAbsentCpf (0.00s)
+=== RUN   TestGetByInvalidCpf
+--- PASS: TestGetByInvalidCpf (0.00s)
+=== RUN   TestUpdate
+--- PASS: TestUpdate (0.00s)
+=== RUN   TestDelete
+--- PASS: TestDelete (0.00s)
+PASS
+ok  	github.com/coolparadox/cpf/api	0.234s
+```
+
+Note: performing these unit tests causes erasing of previous database contents.
+
 ## Backup and Recovery
 
 Scripts `db/backup.sh` and `db/restore.sh` generate and restore backups from/to the database. Backup files are generated (and expected to be when restored) in directory `backup`.
