@@ -93,11 +93,12 @@ The cloned version of this file contains one user `guest` with password `guest`.
 
 Please refer to [Architecture wiki](https://github.com/coolparadox/nw-chlg/wiki/Architecture) for details on the architecture of this software.
 
-## Wishlist / Known Issues
+## Wish List / Known Issues
 
 * Real world acquisiton of valid Lets's Encrypt certificates is yet to be tested.
 * There are no authorization levels (eg. read only users versus admins).
 * The frontend demonstrates Flux + React pattern and RESTful access by managing only CPF / CNPJ numbers; for production  more fields would have to be supported (eg: name, contact info etc.)
+* Content pagination controls are not implemented.
 
 ## References and Original Work
 
